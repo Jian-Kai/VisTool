@@ -9,6 +9,17 @@ import logo from './logo.svg';
 import './style.css';
 import classnames from 'classnames';
 
+//Css
+let input_style = {
+    backgroundColor: 'lightgray',
+    textAlign: 'center',
+    borderRadius: '10px',
+
+}
+let speace = {
+    height: '50px'
+}
+
 function FieldGroup({ id, label, ...props }) {
     return (
         <FormGroup controlId={id}>
@@ -18,6 +29,15 @@ function FieldGroup({ id, label, ...props }) {
     );
 }
 
+function Contentlist({ content }) {
+    //console.log(content)
+    return (
+        <Col md={10} mdOffset={1} style={input_style}>
+            textarea
+        </Col>
+    )
+}
+
 class StartPage extends Component {
     constructor(props) {
         super(props);
@@ -25,23 +45,14 @@ class StartPage extends Component {
         this.handleClick = this.handleClick.bind(this)
     }
 
-    handleClick(){
-        const { onLoadFile,filename } = this.props;
+    handleClick() {
+        const { onLoadFile, filename } = this.props;
         onLoadFile(filename);
     }
     render() {
-        const { className, onLoadFile, onChangeFileName, filename } = this.props;
+        const { className, onLoadFile, onChangeFileName, filename, content } = this.props;
         console.log("iii")
         console.log(this.props)
-        let input_style = {
-            backgroundColor: 'lightgray',
-            textAlign: 'center',
-            borderRadius: '10px',
-
-        }
-        let speace = {
-            height: '50px'
-        }
 
         return (
             <div>
@@ -53,22 +64,31 @@ class StartPage extends Component {
                 </div>
                 <div style={speace}>
                 </div>
-                <Col md={6} mdOffset={3}>
-                    <div style={input_style} >
-                        <FieldGroup
-                            id="formControlsFile"
-                            type="file"
-                            label="Input File"
-                            accept=".json"
-                            onChange={onChangeFileName}
-                        />
-                        <Link to='/about'>
-                            <Button bsStyle="primary" onClick={this.handleClick}>
-                                Submit
-                            </Button>
-                        </Link>
-                    </div>
-                </Col>
+
+                {// decide content is null or not 
+                    (content === null) ?
+                        (
+                            <Col md={6} mdOffset={3}>
+                                <div style={input_style} >
+                                    <FieldGroup
+                                        id="formControlsFile"
+                                        type="file"
+                                        label="Input File"
+                                        accept=".json"
+                                        onChange={onChangeFileName}
+                                    />
+                                    <Button bsStyle="primary" onClick={this.handleClick}>
+                                        Submit
+                                </Button>
+                                </div>
+                            </Col>
+                        )
+                        :
+                        (
+                            Contentlist({ content })
+                        )
+                }
+
             </div>
         );
     }

@@ -8,16 +8,21 @@ import {
 
 export default connect(
   (state) => ({
-    filename: state.getIn(['vis', 'file_name'])
+    filename: state.getIn(['vis', 'file_name']),
+    content:state.getIn(['vis', 'content'])
   }),
   (dispatch) => ({
+    
     onLoadFile: (name) => {
       console.log(name)
       let filereader = new FileReader();
       filereader.onload = function(){
-        const context = JSON.parse(filereader.result);
-        console.log(context)
-        dispatch(loadFile(context))
+        //const context = JSON.parse(filereader.result);
+        const context = (filereader.result);
+        let line = context.split("\n")
+        console.log(line[0].split(",")[0])
+        //console.log(context);
+        dispatch(loadFile(context));
       }
       filereader.readAsText(name)
       
