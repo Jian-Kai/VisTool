@@ -1,5 +1,17 @@
 import React, { Component } from 'react';
-import { Col, } from 'react-bootstrap'
+import { Col, Table } from 'react-bootstrap'
+
+function Tablehead({ keyvalue }) {
+    console.log(keyvalue)
+    let key_haed = keyvalue.map((parm) => (<th>{parm}</th>))
+    return (
+        <thead>
+            <tr>
+                {key_haed}
+            </tr>
+        </thead>
+    )
+}
 
 function Contentlist({ content, style }) {
     let speace = {
@@ -7,7 +19,7 @@ function Contentlist({ content, style }) {
     }
 
     let line = content.split("\n")
-    console.log(line[0].split(",")[0])
+   
     let row_key = line[0].split(",").slice(1);
     let col_key = [];
     let data_set = [];
@@ -31,11 +43,15 @@ function Contentlist({ content, style }) {
         <Col md={10} mdOffset={1} style={style}>
             <div style={speace}>
             </div>
-            <Col md={10} mdOffset={1} style={{ background: 'white', borderRadius: '10px' }}>
-                textarea
+            <Col md={10} mdOffset={1} style={{ background: 'white', borderRadius: '10px', overflow: "scroll" }}>
+                <Table striped bordered condensed hover>
+                    <Tablehead keyvalue={row_key} />
+                </Table>
             </Col>
         </Col>
     )
 }
+
+
 
 export default Contentlist;
