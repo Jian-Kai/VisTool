@@ -19,8 +19,7 @@ export default connect(
       filereader.onload = function(){
         //const context = JSON.parse(filereader.result);
         const context = (filereader.result);
-        let line = context.split("\n")
-        console.log(line[0].split(",")[0])
+        
         //console.log(context);
         dispatch(loadFile(context));
       }

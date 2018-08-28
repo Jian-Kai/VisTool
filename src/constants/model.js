@@ -2,5 +2,10 @@ import Immutable from 'immutable';
 
 export const VisState = Immutable.fromJS({
     file_name: '',
-    content: null
+    content: null,
+    data_set: {
+        row: [],
+        col: [],
+        data: []
+    }
 });

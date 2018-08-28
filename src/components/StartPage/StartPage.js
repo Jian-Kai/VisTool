@@ -3,10 +3,11 @@ import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
 import { FormGroup, ControlLabel, FormControl } from 'react-bootstrap'
 import { Col, } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+//import { Link } from 'react-router-dom'
 
 import logo from './logo.svg';
 import './style.css';
+import Contentlist from './Contentlist'
 import classnames from 'classnames';
 
 //Css
@@ -29,14 +30,7 @@ function FieldGroup({ id, label, ...props }) {
     );
 }
 
-function Contentlist({ content }) {
-    //console.log(content)
-    return (
-        <Col md={10} mdOffset={1} style={input_style}>
-            textarea
-        </Col>
-    )
-}
+
 
 class StartPage extends Component {
     constructor(props) {
@@ -74,18 +68,19 @@ class StartPage extends Component {
                                         id="formControlsFile"
                                         type="file"
                                         label="Input File"
-                                        accept=".json"
+                                        accept=".csv"
                                         onChange={onChangeFileName}
                                     />
                                     <Button bsStyle="primary" onClick={this.handleClick}>
                                         Submit
-                                </Button>
+                                    </Button>
                                 </div>
                             </Col>
                         )
                         :
                         (
-                            Contentlist({ content })
+                            //Contentlist({ content })
+                            <Contentlist content = {content} style = {input_style} />
                         )
                 }
 
