@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Col, } from 'react-bootstrap'
+import { Col, Button } from 'react-bootstrap'
 import * as d3 from "d3";
+import { Link } from 'react-router-dom'
 //import { select } from 'd3-selection'
 
 
@@ -34,19 +35,20 @@ class Contentlist extends Component {
         console.log(data_set)
 
         this.state = {
-            row_key: row_key,
-            col_key: col_key,
+            station_key: row_key,
+            date_key: col_key,
             data_set: data_set,
         }
 
     }
 
     componentDidMount() {
-        const width = 60 * this.state.col_key.length,
+        const width = d3.select("#col").node().getBoundingClientRect().width,
             height = d3.select("#col").node().getBoundingClientRect().height;
         console.log(d3.select("#col").node().getBoundingClientRect())
 
-        var table = d3.select("#col").append("table").attr('height', height * 0.9).style('top', height * 0.05 + 'px').style('position','absolute');
+        var div = d3.select("#col").append('div').style('height', height * 0.9 + 'px').style('width', width * 0.95 + 'px').style('left', width * 0.025 + 'px').style('top', height * 0.05 + 'px').style('overflow', 'auto').style('position', 'absolute');
+        var table = div.append("table");
 
         var start_line = 0, end_line = 15
         //scroll event
@@ -71,7 +73,7 @@ class Contentlist extends Component {
         var headers = table.append('thead')
             .append('tr')
             .selectAll('th')
-            .data(this.state.row_key)
+            .data(this.state.station_key)
             .enter()
             .append('th')
             .style('padding', '6px')
@@ -98,11 +100,18 @@ class Contentlist extends Component {
     }
 
     render() {
-        let { style } = this.props
-
+        let { style, onClickBtn } = this.props
+        console.log(this.props)
         return (
             <Col md={10} mdOffset={1} style={style}>
-                <Col  id={"col"} md={10} mdOffset={1} style={{ background: 'white', height: "700px", overflow: 'auto' }}>
+                <Col id={"col"} md={10} mdOffset={1} style={{ background: 'white', height: "700px" }}>
+                </Col>
+                <Col md={1} style={{ height: "700px" }}>
+                    <Link to="./about">
+                        <Button bsStyle="primary" bsSize="large" style={{ top: '650px', position: 'absolute' }} onClick={onClickBtn}>
+                            Next
+                        </Button>
+                    </Link>
                 </Col>
             </Col>
         )

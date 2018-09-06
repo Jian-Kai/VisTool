@@ -4,8 +4,8 @@ export const VisState = Immutable.fromJS({
     file_name: '',
     content: null,
     data_set: {
-        row: [],
-        col: [],
+        station: [],
+        date: [],
         data: []
     }
 });

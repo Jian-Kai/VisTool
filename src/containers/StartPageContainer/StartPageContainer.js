@@ -3,7 +3,8 @@ import StartPage from '../../components/StartPage';
 
 import {
   loadFile,
-  changeFileName
+  changeFileName,
+  dataHandle
 } from '../../actions';
 
 export default connect(
@@ -29,6 +30,9 @@ export default connect(
     onChangeFileName: (e) => {
       //console.log(e.target.files[0])
       dispatch(changeFileName(e.target.files[0]))
+    },
+    onDataHandle:()=>{
+      dispatch(dataHandle());
     }
   })
 )(StartPage);

@@ -44,7 +44,7 @@ class StartPage extends Component {
         onLoadFile(filename);
     }
     render() {
-        const { className, onLoadFile, onChangeFileName, filename, content } = this.props;
+        const { className, onChangeFileName, content, onDataHandle } = this.props;
         console.log("iii")
         console.log(this.props)
 
@@ -80,7 +80,7 @@ class StartPage extends Component {
                         :
                         (
                             //Contentlist({ content })
-                            <Contentlist content = {content} style = {input_style} />
+                            <Contentlist content = {content} style = {input_style} onClickBtn={onDataHandle}/>
                         )
                 }
 
