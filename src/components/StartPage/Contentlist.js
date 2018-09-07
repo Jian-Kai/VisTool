@@ -32,13 +32,15 @@ class Contentlist extends Component {
 
         //console.log(row_key)
         //console.log(col_key)
-        console.log(data_set)
+        //console.log(data_set)
 
         this.state = {
             station_key: row_key,
             date_key: col_key,
-            data_set: data_set,
+            quantity: data_set,
         }
+
+        this.handleClick = this.handleClick.bind(this)
 
     }
 
@@ -84,7 +86,7 @@ class Contentlist extends Component {
 
         var body = table.append('tbody').call(scrollEvent)
             .selectAll('tr')
-            .data(this.state.data_set)
+            .data(this.state.quantity)
             .enter()
             .append('tr')
             .attr('hidden', (d, i) => { if (i >= end_line || i < start_line) return true })
@@ -99,6 +101,11 @@ class Contentlist extends Component {
 
     }
 
+    handleClick() {
+        const { onClickBtn } = this.props
+        onClickBtn(this.state)
+    }
+
     render() {
         let { style, onClickBtn } = this.props
         console.log(this.props)
@@ -108,7 +115,7 @@ class Contentlist extends Component {
                 </Col>
                 <Col md={1} style={{ height: "700px" }}>
                     <Link to="./about">
-                        <Button bsStyle="primary" bsSize="large" style={{ top: '650px', position: 'absolute' }} onClick={onClickBtn}>
+                        <Button bsStyle="primary" bsSize="large" style={{ top: '650px', position: 'absolute' }} onClick={this.handleClick}>
                             Next
                         </Button>
                     </Link>

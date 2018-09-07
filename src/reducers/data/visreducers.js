@@ -18,18 +18,20 @@ const handlefileread = () => {
 
 const visReducers = handleActions({
   LOAD_FILE: (state, { payload }) => {
-    const file_name = state.get('file_name')
-    console.log(file_name)
+    //const file_name = state.get('file_name')
+    //console.log(file_name)
 
     return state.set('content', payload)
   },
   CHANGE_FILENAME: (state, { payload }) => {
-    console.log(payload)
+    //console.log(payload)
     return state.set('file_name', payload)
   },
-  DATA_HANDLE: (state) => {
-    console.log(state)
-    return state;
+  DATA_HANDLE: (state, { payload }) => {
+    //console.log(state)
+    //state.set('data_set','station', payload.station_key)
+   
+    return state.set("data_set", payload);
   }
 }, VisState);
 

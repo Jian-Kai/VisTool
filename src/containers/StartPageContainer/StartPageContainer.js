@@ -31,8 +31,9 @@ export default connect(
       //console.log(e.target.files[0])
       dispatch(changeFileName(e.target.files[0]))
     },
-    onDataHandle:()=>{
-      dispatch(dataHandle());
+    onDataHandle:(data)=>{
+      console.log(data)
+      dispatch(dataHandle(data));
     }
   })
 )(StartPage);
