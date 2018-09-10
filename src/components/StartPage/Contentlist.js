@@ -18,7 +18,7 @@ class Contentlist extends Component {
 
         row_key[0] = '#';
 
-        for (var i = 1; i < line.length; i++) {
+        for (var i = 1; i < line.length - 1; i++) {
             col_key.push(line[i].split(",")[0])
         }
 
@@ -91,7 +91,7 @@ class Contentlist extends Component {
             .append('tr')
             .attr('hidden', (d, i) => { if (i >= end_line || i < start_line) return true })
             .selectAll('td')
-            .data((d, i) => (this.state.data_set[i]))
+            .data((d, i) => (this.state.quantity[i]))
             .enter()
             .append('td')
             .style('padding', '6px')
@@ -114,7 +114,7 @@ class Contentlist extends Component {
                 <Col id={"col"} md={10} mdOffset={1} style={{ background: 'white', height: "700px" }}>
                 </Col>
                 <Col md={1} style={{ height: "700px" }}>
-                    <Link to="./about">
+                    <Link to="./Volume">
                         <Button bsStyle="primary" bsSize="large" style={{ top: '650px', position: 'absolute' }} onClick={this.handleClick}>
                             Next
                         </Button>
