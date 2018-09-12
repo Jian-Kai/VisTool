@@ -13,11 +13,12 @@ class Volume extends Component {
   componentDidMount() {
     const width = d3.select("#MainArea").node().getBoundingClientRect().width,
       height = d3.select("#MainArea").node().getBoundingClientRect().height;
-    console.log(width);
 
+    const { station_info } = this.props;
+    console.log(this.props);
     var main = d3.select('#MainArea').append('svg').attr('left', '0px').attr('top', '0px').attr('width', width).attr('height', height);
 
-    var map = main.append('rect')
+    var MapArea = main.append('rect')
       .attr('id', 'MapArea')
       .attr("rx", 5)
       .attr("ry", 5)
@@ -27,14 +28,34 @@ class Volume extends Component {
       .attr('height', height * 0.45)
       .attr('fill', 'white')
       .style("stroke", 'black')
-      .style('storke-width', '1px')
+      .style('storke-width', '1px');
+
+    var Station = main.selectAll('circle')
+      .data(station_info)
+      .enter()
+      .append('circle')
+      .attr('fill', d => {
+        if (d.color[0] == 'BL')
+          return 'blue'
+        else if (d.color[0] == 'BR')
+          return 'brown'
+        else if (d.color[0] == 'R')
+          return 'red'
+        else if (d.color[0] == 'G')
+          return 'green'
+        else if (d.color[0] == 'O')
+          return 'orange'
+      })
+      .attr('r', 5)
+      .attr('cx', (d) => (d.position[0]))
+      .attr('cy', (d) => (d.position[1]))
+      .on('click', (d) => {console.log(d.name)})
 
   }
 
   render() {
-    const { data_set , onLoadMetroMap} = this.props;
-    console.log(this.props)
-    onLoadMetroMap();
+    const { data_set, onLoadMetroMap } = this.props;
+
     return (
       <div>
         <h1 style={{ textAlign: 'center' }}>

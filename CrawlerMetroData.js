@@ -16,7 +16,7 @@ const metro = function () {
         let map = $('map area')
         //console.log(map.eq(1)[0].attribs)
         let station_info = {
-            data:[]
+            data: []
         }
         for (var i = 0; i < map.length - 4; i++) {
             //console.log(map.eq(i)[0].attribs)
@@ -42,16 +42,19 @@ const metro = function () {
             //Metro position
             if (init.shape === 'rect') {
                 var coords = init.coords.split(',');
-                station.position = [(parseInt(coords[0]), parseInt(coords[2])) / 2, (parseInt(coords[1]) + parseInt(coords[3])) / 2]
+                station.position = [(parseInt(coords[0]) + parseInt(coords[2])) / 2, (parseInt(coords[1]) + parseInt(coords[3])) / 2]
             }
             else {
                 var coords = init.coords.split(',');
-                var x = 0, y = 0;
+                var coordx = [], coordy = []
+
                 for (let i = 0; i < coords.length; i += 2) {
-                    x += parseInt(coords[i])
-                    y += parseInt(coords[i + 1])
+                    coordx.push(parseInt(coords[i]))
+                    coordy.push(parseInt(coords[i + 1]))
                 }
-                station.position = [x / (coords.length / 2), y / (coords.length / 2)]
+                var min = [Math.min(...coordx), Math.min(...coordy)],
+                    max = [Math.max(...coordx), Math.max(...coordy)]
+                station.position = [(min[0] + max[0]) / 2, (min[1] + max[1]) / 2]
             }
             //console.log(station.position)
 
@@ -70,7 +73,7 @@ const metro = function () {
             station_info.data.push(station)
         }
 
-        fs.writeFileSync('MetroStation.js', 'export default ' + JSON.stringify(station_info) , 'utf8');
+        fs.writeFileSync('MetroStation.js', 'export default ' + JSON.stringify(station_info), 'utf8');
 
     });
 };
