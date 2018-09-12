@@ -4,10 +4,12 @@ import { VisState } from '../../constants/model';
 import {
   LOAD_FILE,
   CHANGE_FILENAME,
-  DATA_HANDLE
+  DATA_HANDLE,
+  LOAD_METROMAP
 } from '../../constants/actionTypes';
 
 //import * as fs from 'fs';
+const fs = require('fs');
 
 /*
 const handlefileread = () => {
@@ -30,8 +32,11 @@ const visReducers = handleActions({
   DATA_HANDLE: (state, { payload }) => {
     //console.log(state)
     //state.set('data_set','station', payload.station_key)
-   
+
     return state.set("data_set", payload);
+  },
+  LOAD_METROMAP: (state, {payload}) => {
+    return state.set("map", payload);
   }
 }, VisState);
 

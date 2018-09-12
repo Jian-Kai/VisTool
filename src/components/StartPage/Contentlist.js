@@ -103,6 +103,8 @@ class Contentlist extends Component {
 
     handleClick() {
         const { onClickBtn } = this.props
+
+        
         onClickBtn(this.state)
     }
 
