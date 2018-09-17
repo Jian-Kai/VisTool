@@ -10,6 +10,34 @@ import './style.css';
 
 class Volume extends Component {
 
+  constructor(props) {
+    super(props);
+    const { station_info } = this.props;
+    const R = station_info.filter(station => {
+      for (var i = 0; i < station.color.length; i++) {
+        if (station.color[i] == 'R' && station.id[i] != 'R22A')
+          return true
+      }
+    }).sort((a, b) => {
+      var aid, bid;
+      for (var i = 0; i < a.color.length; i++) {
+        if (a.color[i] == 'R')
+          aid = a.id[i].slice(1, a.id[i].length)
+      }
+      for (var i = 0; i < b.color.length; i++) {
+        if (b.color[i] == 'R')
+          bid = b.id[i].slice(1, b.id[i].length)
+      }
+
+      return aid - bid
+    })
+    console.log(R)
+
+    this.state = {
+      "RLine": R
+    }
+  }
+
   componentDidMount() {
     const width = d3.select("#MainArea").node().getBoundingClientRect().width,
       height = d3.select("#MainArea").node().getBoundingClientRect().height;
@@ -24,13 +52,25 @@ class Volume extends Component {
       .attr('id', 'MapArea')
       .attr("rx", 5)
       .attr("ry", 5)
-      .attr('x', mapmin[0])
-      .attr('y', mapmin[1] - 30)
-      .attr('width', mapmax[0] - mapmin[0])
-      .attr('height', mapmax[1] - mapmin[1])
+      .attr('x', mapmin[0] - 10)
+      .attr('y', mapmin[1] - 30 - 10)
+      .attr('width', (mapmax[0] - mapmin[0]) + 20)
+      .attr('height', (mapmax[1] - mapmin[1]) + 20)
       .attr('fill', 'white')
       .style("stroke", 'black')
       .style('storke-width', '1px');
+
+    var line = d3.line()
+      .x(d => d.position[0])
+      .y(d => d.position[1] - 30)
+      
+    console.log(line(this.state.RLine))
+    var MetroLine = main.append('path')
+      //.data(this.state.RLine)
+      .attr('d', line(this.state.RLine))
+      .attr("stroke", "red")
+      .attr("stroke-width", 2)
+      .attr("fill", "none")
 
     var Station = main.selectAll('circle')
       .data(station_info)
@@ -39,6 +79,8 @@ class Volume extends Component {
       .attr('fill', d => {
         if (d.color[0] == 'BL')
           return 'blue'
+        else if (d.id[0] == 'R22A')
+          return 'pink'
         else if (d.color[0] == 'BR')
           return 'brown'
         else if (d.color[0] == 'R')
@@ -47,6 +89,7 @@ class Volume extends Component {
           return 'green'
         else if (d.color[0] == 'O')
           return 'orange'
+
       })
       .attr('r', 4)
       .attr('cx', (d) => (d.position[0]))
